@@ -8,18 +8,68 @@
 # keywords such as INPUT, OUTPUT, IF, ELSE, WHILE, SET, or similar terms.
 
 # TODO 1: Identify the information the movement process needs.
+# Define the room map linking rooms with valid directional pathways.
+SET rooms = {
+"Great Hall": {'South': 'Bedroom'},
+"Bedroom": {'North': 'Great Hall;', 'East': 'Cellar'},
+"Cellar": {'West': 'Bedroom'}
+}
+
+#Initialize game state variables
+SET current_room = 'Great Hall'
+SET game_over = FALSE
 # Consider the player's current room and movement command.
 
 # TODO 2: Prompt for and receive the player's movement command.
 
+#Display the player's current location and prompt for input
+OUTPUT "You are currently in the: " + current_room
+OUTPUT "Enter your move (e.g., North, South, East, West) or 'Exit' to quit:"
+INPUT move_command
+
 # TODO 3: Validate whether the requested movement is possible from the
 # current room. Show the decision clearly.
+
+IF move_command IS IN rooms[current_room]:
+    # Valid movement path exists
+    ...
+ELSE:
+    # Invalid movement path
+    ...
+ENDIF
+
 
 # TODO 4: Describe what happens when the movement command is valid.
 # Include the room update and player output.
 
+# Update the player's current room to the destination room
+SET current_room = rooms[current_room][move_command]
+OUTPUT :You move to the " + current_room + "."
+
+
 # TODO 5: Describe what happens when the movement command is invalid.
 # Include the output the player should receive.
 
+OUTPUT "You cannot go that way! There is no door in that direction."
+
 # TODO 6: Show how movement fits into repeated gameplay.
 # The final game continues accepting commands until a required ending occurs.
+
+WHILE game_over IS FALSE:
+    OUTPUT "You are currently in the: " + current_room
+    OUTPUT "Enter your move (e.g., North, South, East, West) or 'Exit' to quit:"
+    INPUT move_command
+
+    IF move_command IS EQUAL TO "Exit":
+       OUTPUT "Thanks for playing! Goodbye."
+       SET game_over = TRUE
+    ELSE:
+        If move_command IS IN rooms[current_room]:
+        SET current_room = rooms[current_ room][move_command]
+        OUTPUT "You move to the " + current_room + "."
+    ELSE:
+        OUTPUT "You cannot go that way! There is no door in that direction."
+    ENDIF
+  ENDIF
+ENDWHILE
+
